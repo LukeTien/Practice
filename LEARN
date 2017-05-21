@@ -1,19 +1,8 @@
-import java.io.BufferedInputStream;
 import java.io.BufferedReader;
-import java.io.File;
-import java.io.FileWriter;
-import java.io.InputStream;
 import java.io.InputStreamReader;
-
-import java.io.Reader;
-import java.net.Authenticator;
 import java.net.HttpURLConnection;
-import java.net.MalformedURLException;
 import java.net.URL;
-import java.net.URLConnection;
-
 import java.util.ArrayList;
-import java.util.Iterator;
 
 
 
@@ -33,36 +22,22 @@ public class LEARN {
 			URL url = new URL("http://freshman.tw/cross/106/015262");
 			HttpURLConnection con= (HttpURLConnection)url.openConnection();
 			con.setDoInput(true);
-			//con.setDoOutput(false);
 			con.setRequestProperty("User-Agent", "Mozilla/5.0 (Windows NT 6.1; Win64; x64)");
-			//con.setRequestProperty("RANGE","bytes=207139");
-			//con.connect();
+
 			
 			InputStreamReader a=new InputStreamReader(con.getInputStream(),"utf-8");
 			br = new BufferedReader(a);
 			String s;
 			while(( s = br.readLine())!=null)
-			{
-				if((s.indexOf("</script></td>"))!=-1)
-				{
-					
-					parase(s);
-					//System.out.println(s);
-					
-				}
+			{	
+					parase(s);			
 			}
 
 			br.close();
-			
-//			while(even.iterator().hasNext())
-//			{
-//				System.out.println(even.iterator().next());
-//			}
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-//		System.out.println(even.size());
 //		Iterator iter=even.iterator();
 //		while(iter.hasNext())
 //		{
@@ -75,46 +50,45 @@ public class LEARN {
 		
 		
 		int count = 0,endi=0,i=0,spanstart=0,spanend=0;
-		while((count+Numberend) <= s.length())
+		while((Numberstart = s.indexOf("<span class=\"number\"><a id=\"",Numberend+1))!=-1)
 		{
-			spanstart=s.indexOf("<td rowspan=");
-			spanend=s.indexOf("\"><span");
-			endi = Integer.valueOf(s.substring(spanstart+13,spanend));
-			
-			
-			Numberstart = s.indexOf("<span class=\"number\"><a id=\"",Numberend+1);
 			Numberend = s.indexOf("</a>",Numberstart+1);
+			
+			
+			spanstart=s.indexOf("display:none\">",spanend+1);
+			spanend=s.indexOf("</span>",spanstart+1);
+			endi = Integer.valueOf(s.substring(spanstart+14,spanend));
+			answer=s.substring(Numberstart+38,Numberend);
+			
+			even.add(answer);
+			System.out.println(answer);
+				
+					
 
-			if(Numberstart!=-1)
-			{
-				answer=s.substring(Numberstart+38,Numberend);
-				if(even.contains(answer)==false){
-					even.add(answer);
-					System.out.println(answer);
-					
-					
-
-					while(i<=endi){
-						Numberstart = s.indexOf("<a href=\"",Numberend+1);
-						Numberend = s.indexOf("</a>",Numberstart+1);
-						temp=s.substring(Numberstart+3,Numberend);
-						System.out.println(temp);
-						i++;
-					}
-					i=0;
-					
-					
-				}
-				if(even.size()>=243)
+			while(i < endi){
+				schstart = s.indexOf("<a href=\"",schend+1);
+				schend = s.indexOf("</a>",schstart+1);
+				temp=s.substring(schstart,schend);
+				
+				if(temp.contains("#")==true)
 				{
-					break;
+					temp = s.substring(schstart+12,schend);
 				}
+				else if(temp.contains("crown")==true)
+				{
+					temp = s.substring(schstart+45,schend);
+				}
+				else
+				{
+					temp = s.substring(schstart+17,schend);
+				}
+				System.out.println(temp);
+				i++;
 			}
-
-			//System.out.println(count +"   "+s.trim().length());
-			count++;
+			i=0;
 		}
 
 	}
 	
 }
+
