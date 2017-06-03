@@ -11,14 +11,14 @@ import java.util.Iterator;
 
 public class LEARN {
 //	String answer;
-//	static ArrayList<Student>  even =new ArrayList();
+	
 //	//static ArrayList<Student> odd =new ArrayList();
 //	
 //	static BufferedReader br;
 
 	public static void main(String[] args)  {
 		// TODO Auto-generated method stub
-		
+		 ArrayList<Student>  even =new ArrayList();
 //		Iterator<Student> iter=even.iterator();
 //		while(iter.hasNext())
 //		{
@@ -26,7 +26,7 @@ public class LEARN {
 //				
 //		}
 		GetUrlImformation ge = new GetUrlImformation();
-		ge.get();
+		even = ge.get();
 	}
 	
 	
@@ -37,6 +37,7 @@ interface Information{
 
 	String getSchool();
 	String getOrder();
+	String getlearn();
 }
 
 
@@ -62,11 +63,18 @@ class Student{
 
 class School implements Information{
 	String school;
+	String learn;
 	String order;
 //	ArrayList<Information> list;
 	School(String school,String order){
 		this.school =  school;
 		this.order = order;
+	}
+	
+	School(String school,String learn,String order){
+		this.school =  school;
+		this.order = order;
+		this.learn = learn;
 	}
 //	@Override
 //	public void add(Information s) {
@@ -80,6 +88,11 @@ class School implements Information{
 	public String getOrder() {
 		// TODO Auto-generated method stub
 		return order;
+	}
+	
+	public String getlearn() {
+		// TODO Auto-generated method stub
+		return learn;
 	}
 }
 

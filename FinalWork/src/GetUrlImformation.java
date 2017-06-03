@@ -8,11 +8,11 @@ import java.util.Iterator;
 public class GetUrlImformation {
 	
 	String answer;
-	static ArrayList<Student>  even =new ArrayList();
-	static BufferedReader br;
+	ArrayList<Student>  even =new ArrayList();
+	BufferedReader br;
 	
 	
-	public void get(){
+	public ArrayList<Student> get(){
 		try {
 			
 			URL url = new URL("http://freshman.tw/cross/106/015262");
@@ -34,6 +34,7 @@ public class GetUrlImformation {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
+		return even;
 //		Iterator <Student> iter=even.iterator();
 //		while(iter.hasNext())
 //		{
@@ -44,11 +45,11 @@ public class GetUrlImformation {
 	
 	public  void parase(String s){
 		int Numberstart = 0,Numberend=0,schstart=0,schend=0;
-		String answer,temp;
+		String answer,temp,schooltemp;
 		
 		
 		int count = 0,endi=0,i=0,spanstart=0,spanend=0,namestart=0,nameend=0;
-		int tdstart=0,tdend=0;
+		int tdstart=0,tdend=0,spacetemp;
 		while((Numberstart = s.indexOf("<span class=\"number\"><a id=\"",tdend+1))!=-1)
 		{
 			Numberend = s.indexOf("</a>",Numberstart+1);
@@ -76,19 +77,28 @@ public class GetUrlImformation {
 			while(i < endi){
 				schstart = s.indexOf("<a href=\"",schend+1);
 				schend = s.indexOf("</a>",schstart+1);
-				temp=s.substring(schstart,schend);
+				temp = s.substring(schstart,schend);
 				
 				if(temp.contains("#")==true)
 				{
 					temp = s.substring(schstart+12,schend);
+					spacetemp = temp.indexOf(" ");
+					schooltemp = temp.substring(0,spacetemp);
+					temp = temp.substring(spacetemp);
 				}
 				else if(temp.contains("crown")==true)
 				{
 					temp = s.substring(schstart+44,schend);
+					spacetemp = temp.indexOf(" ");
+					schooltemp = temp.substring(0,spacetemp);
+					temp = temp.substring(spacetemp);
 				}
 				else
 				{
 					temp = s.substring(schstart+17,schend);
+					spacetemp = temp.indexOf(" ");
+					schooltemp = temp.substring(0,spacetemp);
+					temp = temp.substring(spacetemp);
 				}
 				
 				
@@ -116,7 +126,7 @@ public class GetUrlImformation {
 				
 				//System.out.println(temp);
 				Student iter = even.get(even.size()-1);
-				iter.add(new School(temp,answer));
+				iter.add(new School(schooltemp,temp,answer));
 //				sc.add(new school(temp));
 				i++;
 			}
